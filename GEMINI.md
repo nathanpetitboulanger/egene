@@ -18,6 +18,10 @@ Le premier projet du dépôt se concentre sur l'étude du barcoding moléculaire
 
 - `pull_genome.py` : Script de base pour récupérer des séquences de protéines depuis le NCBI (Entrez).
 
+## Rôles de l'IA
+
+- **Correcteur / Rédacteur** : Transformation de notes brutes en supports de cours structurés et correction de contenu pédagogique.
+
 ## Technologies et Bibliothèques
 
 - **Python** : Langage principal.
