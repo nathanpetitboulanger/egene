@@ -101,4 +101,3 @@ Concepts clés :
 
 if __name__ == "__main__":
     barcode_gap_analysis("bold_data.tsv")
-

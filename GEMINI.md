@@ -5,17 +5,18 @@ Ce dépôt est organisé par projets, chacun traitant d'un aspect spécifique de
 ## Projets
 
 ### 1. Barcoding ADN (`barcoding-adn/`)
-
 Le premier projet du dépôt se concentre sur l'étude du barcoding moléculaire.
-
 - `01_fetch_data.py` : Récupération de données depuis BOLD Systems API.
 - `02_data_exploration.py` : Exploration et nettoyage des données.
 - `03_phylogeny.py` : Analyse phylogénétique.
 - `04_barcode_gap.py` : Analyse du "barcode gap".
 
+### 2. Exercices de Génétique Classique
+- `exercice_genetique_insuline.py` : Exercice complet et pédagogique sur la comparaison de l'insuline (Humain vs Souris). Inclut la récupération NCBI, l'alignement et l'analyse.
+
 ## Scripts Utilitaires
 
-- `pull_genome.py` : Script pour récupérer des séquences de protéines depuis le NCBI (Entrez).
+- `pull_genome.py` : Script de base pour récupérer des séquences de protéines depuis le NCBI (Entrez).
 
 ## Technologies et Bibliothèques
 
@@ -36,9 +37,8 @@ uv sync
 
 ### Exécution des scripts
 
-- Pour récupérer des séquences NCBI : `python pull_genome.py`
+- Pour l'exercice d'insuline : `python exercice_genetique_insuline.py`
 - Pour le projet barcoding :
-
   ```bash
   cd barcoding-adn
   python 01_fetch_data.py
