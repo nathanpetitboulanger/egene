@@ -42,4 +42,3 @@ if __name__ == "__main__":
     print("qui centralise les séquences d'ADN 'barcodes' (généralement le gène COI)")
     print("associées à des spécimens identifiés par des experts. L'API nous permet")
     print("d'extraire ces données sans passer par l'interface web.")
-
