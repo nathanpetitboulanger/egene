@@ -13,7 +13,7 @@ def telecharger_sequence(id_ncbi):
 
 
 seq_human = telecharger_sequence("NM_000207")
-seq_pig = telecharger_sequence("397415")
+seq_pig = telecharger_sequence("NM_001109772.2")
 
 print(f"Séquence humaine : {len(seq_human)}")
 print(f"Séquence du porc : {len(seq_pig)}")
@@ -31,7 +31,7 @@ alignement = aligner.align(seq_human, seq_pig)
 alignement
 
 best_align = alignement[0]
-best_align.score()
+print(best_align.score)
 
 # A noter : ici, on obtient un score négatif, donc les séquences sont fortement différentes. Ce n'est pas le résultat attendu car ces deux séquences sont assez proches l'une de l'autre.
 # Ces différences viennent de la différence entre les deux fstas, l'un ne prend que les séquences codantes et l'autres prends les utr aussi
@@ -79,3 +79,40 @@ print(start_pig)
 pig_marn = seq_pig.seq[start_pig:]
 prot_pig_processed = pig_marn.translate(to_stop=True)
 len(prot_pig_processed)
+
+
+aligner.mode = "global"
+
+aligner.match_score = 1  # Identique (+1 point)
+aligner.mismatch_score = -1  # Différent (-1 point)
+aligner.open_gap_score = -2  # Ouvrir un trou (-2 points)
+aligner.extend_gap_score = -1  # Agrandir un trou (-1 point)
+
+prot_align = aligner.align(prot_pig_processed, prot_human_processed)
+prot_align
+
+best_prot_align = prot_align[0]
+print(best_prot_align.score)
+
+print(best_prot_align)
+
+
+# Au final, le problème venait de la mauvaise acession pour l'insuline du porc au début.
+# Note à moi même : apprendre à utiliser le ncbi
+
+
+# Pour les comparaisons de protéines, on n'utilise pas des matrices +1 -1, mais des matrices spécifiques qui donnent un score spécifique à chaque remplacement, car un remplacement de leucine/isoleucine entraine beaucoup moins de problèmes qu'un remplacement leucine / glycine
+from Bio.Align import substitution_matrices
+
+matrice = substitution_matrices.load("BLOSUM62")
+
+aligner = PairwiseAligner()
+aligner.substitution_matrix = matrice
+
+aligner.open_gap_score = -10
+aligner.extend_gap_score = -0, 5
+aligner.mode = "global"
+
+prot_align_matrix = aligner.align(prot_human_processed, prot_pig_processed)
+best_prot_align_matrix = prot_align_matrix[0]
+print(best_prot_align_matrix.score)
