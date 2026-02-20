@@ -61,3 +61,21 @@ prot_pig = seq_pig.seq.translate(to_stop=True)
 
 len(prot_human)
 len(prot_pig)
+
+# Il y a encore un problème important de longueur entre les deux, il est donc probable que j'ai pris un gène de humain mRNA (donc post épissage) et une CDS de porc (donc plus longue), l'idée est de transformer cette séquence CDS en mRNA
+# Avant de passer à une telle étape, on va d'abord juste voir si ce n'est pas un problème d'ATG (si ça se trouve la protéine du porc commence par le 5'UTR et je l'ai traduite depuis cette zone, expliquant sa longueur)
+
+
+start_human = seq_human.seq.find("ATG")
+print(start_human)
+
+human_marn = seq_human.seq[start_human:]
+prot_human_processed = human_marn.translate(to_stop=True)
+len(prot_human_processed)
+
+start_pig = seq_pig.seq.find("ATG")
+print(start_pig)
+
+pig_marn = seq_pig.seq[start_pig:]
+prot_pig_processed = pig_marn.translate(to_stop=True)
+len(prot_pig_processed)
