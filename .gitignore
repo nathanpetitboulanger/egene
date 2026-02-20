@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Ignorer le dossier contenant mes cours et mes PDF
+cours/
