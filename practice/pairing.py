@@ -1,0 +1,63 @@
+from Bio import Entrez, SeqIO
+from Bio.Align import PairwiseAligner
+
+Entrez.email = "tauzin_pierre@orange.fr"
+
+
+def telecharger_sequence(id_ncbi):
+    """Petite fonction pour éviter de copier-coller le code Entrez"""
+    with Entrez.efetch(
+        db="nucleotide", id=id_ncbi, rettype="fasta", retmode="text"
+    ) as handle:
+        return SeqIO.read(handle, "fasta")
+
+
+seq_human = telecharger_sequence("NM_000207")
+seq_pig = telecharger_sequence("397415")
+
+print(f"Séquence humaine : {len(seq_human)}")
+print(f"Séquence du porc : {len(seq_pig)}")
+
+aligner = PairwiseAligner()
+
+aligner.mode = "global"
+
+aligner.match_score = 1  # Identique (+1 point)
+aligner.mismatch_score = -1  # Différent (-1 point)
+aligner.open_gap_score = -2  # Ouvrir un trou (-2 points)
+aligner.extend_gap_score = -1  # Agrandir un trou (-1 point)
+
+alignement = aligner.align(seq_human, seq_pig)
+alignement
+
+best_align = alignement[0]
+best_align.score()
+
+# A noter : ici, on obtient un score négatif, donc les séquences sont fortement différentes. Ce n'est pas le résultat attendu car ces deux séquences sont assez proches l'une de l'autre.
+# Ces différences viennent de la différence entre les deux fstas, l'un ne prend que les séquences codantes et l'autres prends les utr aussi
+
+aligner_local = PairwiseAligner()
+
+aligner_local.mode = "local"
+
+aligner_local.match_score = 1
+aligner_local.mismatch_score = -1
+aligner_local.open_gap_score = -2
+aligner_local.extend_gap_score = -1
+
+align_local = aligner_local.align(seq_human.seq, seq_pig.seq)
+align_local
+
+best_align_local = align_local[0]
+print(best_align_local)
+print(best_align_local.score)
+
+# Comme le score reste très bas, je vais essayer de traduire pour comparer la séquence protéique.
+# La différence pourrait s'expliquer par la différence du code génétique ? me parait difficile d'expliquer autant de différences mais c'est à tester
+
+
+prot_human = seq_human.seq.translate(to_stop=True)
+prot_pig = seq_pig.seq.translate(to_stop=True)
+
+len(prot_human)
+len(prot_pig)
