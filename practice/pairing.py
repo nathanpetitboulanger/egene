@@ -1,7 +1,7 @@
 from Bio import Entrez, SeqIO
 from Bio.Align import PairwiseAligner
 
-Entrez.email = "tauzin_pierre@orange.fr"
+Entrez.email = "email"
 
 
 def telecharger_sequence(id_ncbi):

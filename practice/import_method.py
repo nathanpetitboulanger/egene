@@ -21,7 +21,7 @@ print(f"Et voici sa protéine {ma_seq_prot}")
 
 from Bio import Entrez, SeqIO
 
-Entrez.email = "tauzin_pierre@orange.fr"
+Entrez.email = "email"
 
 handle = Entrez.efetch(db="nucleotide", id="NM_000207", rettype="gb", retmode="text")
 
