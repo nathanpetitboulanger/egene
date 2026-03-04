@@ -40,7 +40,7 @@ class DNA_manipulator:
 
     @property
     def revers_comp_list(self) -> list[str]:
-        return [self.comp_dict[key] for key in self.comp_list]
+        return [self.comp_dict[key] for key in self.revert_list]
 
     @property
     def revers_comp_seq(self) -> str:
@@ -50,5 +50,7 @@ class DNA_manipulator:
 
 
 seq = DNA_manipulator(sequence)
-
+seq.sequence
+seq.comp_seq
+seq.revers_seq
 seq.revers_comp_seq
